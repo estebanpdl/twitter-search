@@ -36,7 +36,7 @@ type AccountData struct {
 // main function
 func main () {
 	if len(os.Args) < 4 {
-		fmt.Println("Usage: ./main <username> <password> <account> <output>")
+		fmt.Println("Usage: ./main <username> <password> <accounts-file> <output")
 		os.Exit(1)
 	}
 
@@ -88,7 +88,7 @@ func main () {
 		panic(err)
 	}
 
-	err = ioutil.WriteFile(output, accountJSON, 0644)
+	err = ioutil.WriteFile("../../../test.json", accountJSON, 0644)
 	if err != nil {
 		panic(err)
 	}
