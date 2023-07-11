@@ -4,6 +4,7 @@ import (
 	"os"
     "fmt"
 	"time"
+	"strings"
 	"io/ioutil"
 	"encoding/json"
     twitterscraper "github.com/n0madic/twitter-scraper"
@@ -43,7 +44,7 @@ func main () {
 	// get arguments
 	username := os.Args[1]
 	password := os.Args[2]
-	account := os.Args[3]
+	accountsFile := os.Args[3]
 	output := os.Args[4]
 
 	// twitter scraper
@@ -55,40 +56,65 @@ func main () {
 		panic(err)
 	}
 
-	profile, err := scraper.GetProfile(account)
-	if err != nil {
-        panic(err)
-    }
-
-	accountData := AccountData {
-		Avatar: profile.Avatar,
-		Banner: profile.Banner,
-		Biography: profile.Biography,
-		Birthday: profile.Birthday,
-		FollowersCount: profile.FollowersCount,
-		FollowingCount: profile.FollowingCount,
-		FriendsCount: profile.FriendsCount,
-		IsPrivate: profile.IsPrivate,
-		IsVerified: profile.IsVerified,
-		Joined: profile.Joined,
-		LikesCount: profile.LikesCount,
-		ListedCount: profile.ListedCount,
-		Location: profile.Location,
-		Name: profile.Name,
-		PinnedTweetIDs: profile.PinnedTweetIDs,
-		TweetsCount: profile.TweetsCount,
-		URL: profile.URL,
-		UserID: profile.UserID,
-		Username: profile.Username,
-		Website: profile.Website,
-	}
-	
-	accountJSON, err := json.MarshalIndent(accountData, "", "  ")
+	// Read file with user accounts
+	fileBytes, err := ioutil.ReadFile(accountsFile)
 	if err != nil {
 		panic(err)
 	}
 
-	err = ioutil.WriteFile("../../../test.json", accountJSON, 0644)
+	// Split file into lines
+	accountsList := strings.Split(string(fileBytes), "\n")
+	accountsData := []AccountData{}
+
+	for _, accountName := range accountsList {
+		// Remove leading and trailing whitespace
+		accountName = strings.TrimSpace(accountName)
+
+		// Skip empty lines
+		if accountName == "" {
+			continue
+		}
+
+		// GetProfile function from scraper
+		profile, err := scraper.GetProfile(accountName)
+		if err != nil {
+			panic(err)
+		}
+
+		// struct
+		accountData := AccountData {
+			Avatar: profile.Avatar,
+			Banner: profile.Banner,
+			Biography: profile.Biography,
+			Birthday: profile.Birthday,
+			FollowersCount: profile.FollowersCount,
+			FollowingCount: profile.FollowingCount,
+			FriendsCount: profile.FriendsCount,
+			IsPrivate: profile.IsPrivate,
+			IsVerified: profile.IsVerified,
+			Joined: profile.Joined,
+			LikesCount: profile.LikesCount,
+			ListedCount: profile.ListedCount,
+			Location: profile.Location,
+			Name: profile.Name,
+			PinnedTweetIDs: profile.PinnedTweetIDs,
+			TweetsCount: profile.TweetsCount,
+			URL: profile.URL,
+			UserID: profile.UserID,
+			Username: profile.Username,
+			Website: profile.Website,
+		}
+
+		accountsData = append(accountsData, accountData)
+	}
+
+	// write json file
+	accountJSON, err := json.MarshalIndent(accountsData, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+
+	err = ioutil.WriteFile(output, accountJSON, 0644)
 	if err != nil {
 		panic(err)
 	}

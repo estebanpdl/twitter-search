@@ -55,11 +55,13 @@ func main () {
 		panic(err)
 	}
 
+	// GetProfile function from scraper
 	profile, err := scraper.GetProfile(account)
 	if err != nil {
         panic(err)
     }
 
+	// struct
 	accountData := AccountData {
 		Avatar: profile.Avatar,
 		Banner: profile.Banner,

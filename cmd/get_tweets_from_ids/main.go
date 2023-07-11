@@ -1,11 +1,11 @@
 package main
 
 import (
-	"encoding/json"
-    "fmt"
-	"io/ioutil"
 	"os"
+    "fmt"
 	"strings"
+	"io/ioutil"
+	"encoding/json"
     twitterscraper "github.com/n0madic/twitter-scraper"
 )
 
@@ -80,6 +80,7 @@ func main () {
 			continue
 		}
 
+		// struct
 		simpleTweet := SimpleTweet {
 			ConversationID: tweet.ConversationID,
 			Hashtags: tweet.Hashtags,
