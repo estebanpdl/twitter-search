@@ -35,7 +35,7 @@ type AccountData struct {
 
 // main function
 func main () {
-	if len(os.Args) < 4 {
+	if len(os.Args) != 5 {
 		fmt.Println("Usage: ./main <username> <password> <accounts-file> <output")
 		os.Exit(1)
 	}
