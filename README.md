@@ -77,7 +77,7 @@ Refer to the usage sections for more detailed instructions on running each tool.
 
 To fetch specific tweets using their unique IDs, use the `get_tweets_from_ids` command:
 
-`./get_tweets_from_ids username password ids-text-file output_path`
+`./get_tweets_from_ids -u username -p password -b ids-text-file -o output_path`
 
 Replace the following placeholders with your actual information:
 
@@ -88,7 +88,7 @@ Replace the following placeholders with your actual information:
 
 For example:
 
-`./get_tweets_from_ids johndoe mypassword tweet_ids.txt /home/johndoe/twitter_data.json`
+`./get_tweets_from_ids -u johndoe -p mypassword -b tweet_ids.txt -o /home/johndoe/twitter_data.json`
 
 This command will fetch the tweets specified in `tweet_ids.txt` and write the resulting JSON file in the following directory: `/home/johndoe/twitter_data.json`.
 
@@ -117,7 +117,7 @@ This command will fetch information about the Twitter account `@elonmusk` and wr
 
 To retrieve information about multiple Twitter accounts at once, use the `get_user_info_batch` command:
 
-`./get_user_info_batch username password accounts_text_file output_path`
+`./get_user_info_batch -u username -p password -b accounts_text_file -o output_path`
 
 Replace the following placeholders with your actual information:
 
@@ -128,7 +128,7 @@ Replace the following placeholders with your actual information:
 
 For example:
 
-`./get_user_info_batch johndoe mypassword accounts.txt /home/johndoe/twitter_data.json`
+`./get_user_info_batch -u johndoe -p mypassword -b accounts.txt -o /home/johndoe/twitter_data.json`
 
 This command will fetch information about the Twitter accounts specified in `accounts.txt` and write the resulting JSON file in the following directory: `/home/johndoe/twitter_data.json`.
 
